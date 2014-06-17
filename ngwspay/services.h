@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface services : UITableViewController
+@interface services : UITableViewController <NSURLConnectionDataDelegate>
 
 @end

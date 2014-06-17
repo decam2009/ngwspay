@@ -5,19 +5,27 @@
 //  Created by Boris Kaloshin on 6/17/14.
 //  Copyright (c) 2014 Boris Kaloshin. All rights reserved.
 //
+#define JSONFILE "http://wspay.ru/refs.json"
 
 #import "services.h"
 
 @interface services ()
-
+{
+  NSMutableData *webData;
+  NSURLConnection *connection;
+  NSMutableArray *arraySid;
+  NSMutableArray *arrayName;
+}
 @end
+
 
 @implementation services
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -26,19 +34,56 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSURL *url = [NSURL URLWithString:@JSONFILE];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    connection = [NSURLConnection connectionWithRequest:request delegate:self];
+  
+    arraySid = [[NSMutableArray alloc] init];
+    arrayName = [[NSMutableArray alloc] init];
+    if (connection)
+      {
+        webData = [[NSMutableData alloc] init];
+      }
 }
 
-- (void)didReceiveMemoryWarning
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [webData setLength:0];
 }
+
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+  [webData appendData:data];
+}
+
+-(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+  NSLog(@"Fail with error");
+}
+
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+  NSDictionary *allDataDictionary = [NSJSONSerialization JSONObjectWithData:webData options:0 error:nil];
+  NSDictionary *dataUp = [allDataDictionary objectForKey:@"data"];
+  NSDictionary *dataDown = [dataUp objectForKey:@"data"];
+  NSArray *serviceType = [dataDown objectForKey:@"serviceTypes"];
+  
+  for (NSDictionary *diction in serviceType)
+  {
+    NSString *sid =  [[diction objectForKey:@"id"] stringValue];
+    NSString *name = [diction objectForKey:@"name"];
+    [arraySid addObject:sid];
+    [arrayName addObject:name];
+  }
+  
+  [[self tableView] reloadData];
+}
+
+//- (void)didReceiveMemoryWarning
+//{
+//    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+//}
 
 #pragma mark - Table view data source
 
@@ -50,57 +95,22 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return [arraySid count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSString* cellIdentifier = @"Cell";
+  static NSString* cellIdentifier = @"Cell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-  
-  cell.textLabel.text = @"Hello";
+  if (!cell)
+  {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+  }
+  cell.textLabel.text = [arrayName objectAtIndex:indexPath.row];
+  cell.detailTextLabel.text = [arraySid objectAtIndex:indexPath.row];
   return cell;
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 /*
 #pragma mark - Navigation
