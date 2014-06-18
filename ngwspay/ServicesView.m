@@ -7,19 +7,19 @@
 //
 #define JSONFILE "http://wspay.ru/refs.json"
 
-#import "services.h"
+#import "ServicesView.h"
+#import "ServicesInit.h"
 
-@interface services ()
+@interface ServicesView ()
 {
   NSMutableData *webData;
   NSURLConnection *connection;
-  NSMutableArray *arraySid;
-  NSMutableArray *arrayName;
+  NSMutableArray *array;
+  NSArray *sortedArray;
 }
 @end
 
-
-@implementation services
+@implementation ServicesView
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -38,8 +38,8 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     connection = [NSURLConnection connectionWithRequest:request delegate:self];
   
-    arraySid = [[NSMutableArray alloc] init];
-    arrayName = [[NSMutableArray alloc] init];
+    array = [[NSMutableArray alloc] init];
+  
     if (connection)
       {
         webData = [[NSMutableData alloc] init];
@@ -72,18 +72,23 @@
   {
     NSString *sid =  [[diction objectForKey:@"id"] stringValue];
     NSString *name = [diction objectForKey:@"name"];
-    [arraySid addObject:sid];
-    [arrayName addObject:name];
+    NSString *sortOrder = [diction objectForKey:@"sortOrder"];
+    NSString *logo = [diction objectForKey:@"logo"];
+    NSString *level = [[diction objectForKey:@"level"] stringValue];
+    if ([level isEqualToString:@"1"])
+    {
+      [array addObject:[[ServicesInit alloc]initService:sid name:name sortOrder:sortOrder logo:logo level:level]];
+    }
+    else
+    {
+      continue;
+    }
   }
-  
+  NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sortOrder" ascending:YES];
+  NSArray *discriptors = [NSArray arrayWithObjects:sortOrderDescriptor, nil];
+  sortedArray = [array sortedArrayUsingDescriptors:discriptors];
   [[self tableView] reloadData];
 }
-
-//- (void)didReceiveMemoryWarning
-//{
-//    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-//}
 
 #pragma mark - Table view data source
 
@@ -95,7 +100,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [arraySid count];
+    return [array count];
 }
 
 
@@ -107,8 +112,10 @@
   {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
   }
-  cell.textLabel.text = [arrayName objectAtIndex:indexPath.row];
-  cell.detailTextLabel.text = [arraySid objectAtIndex:indexPath.row];
+  NSObject *o = [[NSObject alloc] init];
+  o = [sortedArray objectAtIndex:indexPath.row];
+  cell.textLabel.text = [o valueForKey:@"name"];
+  cell.detailTextLabel.text = [o valueForKey:@"sid"];
   return cell;
 }
 
