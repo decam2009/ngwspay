@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7DE43BA7-6D73-403F-8D54-8B4B01D4A87E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ngwspay</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F1019950-BA1E-44AA-A86B-9D36B91A9198</key>
+		<string>https://github.com/decam2009/ngwspay.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ngwspay.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F1019950-BA1E-44AA-A86B-9D36B91A9198</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/decam2009/ngwspay.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F1019950-BA1E-44AA-A86B-9D36B91A9198</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F1019950-BA1E-44AA-A86B-9D36B91A9198</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ngwspay</string>
+		</dict>
+	</array>
+</dict>
+</plist>
