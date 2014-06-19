@@ -6,16 +6,19 @@
 //  Copyright (c) 2014 Boris Kaloshin. All rights reserved.
 //
 #define JSONFILE "http://wspay.ru/refs.json"
+//#define JSONLOCAL "/Users/BORIS/Desktop/Telepay"
 
 #import "ServicesView.h"
 #import "ServicesInit.h"
+#import "OperatorsInit.h"
 
 @interface ServicesView ()
 {
   NSMutableData *webData;
   NSURLConnection *connection;
-  NSMutableArray *array;
-  NSArray *sortedArray;
+  NSMutableArray *arrayServiceTypes;
+  NSArray *sortedArrayServiceTypes;
+  NSMutableArray *arrayServices;
 }
 @end
 
@@ -38,7 +41,7 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     connection = [NSURLConnection connectionWithRequest:request delegate:self];
   
-    array = [[NSMutableArray alloc] init];
+    arrayServiceTypes = [[NSMutableArray alloc] init];
   
     if (connection)
       {
@@ -67,17 +70,19 @@
   NSDictionary *dataUp = [allDataDictionary objectForKey:@"data"];
   NSDictionary *dataDown = [dataUp objectForKey:@"data"];
   NSArray *serviceType = [dataDown objectForKey:@"serviceTypes"];
+  NSArray *services = [dataDown objectForKey:@"services"];
   
   for (NSDictionary *diction in serviceType)
   {
-    NSString *sid =  [[diction objectForKey:@"id"] stringValue];
+    // Читаем типы сервисов
+    NSString *sidServiceType =  [[diction objectForKey:@"id"] stringValue];
     NSString *name = [diction objectForKey:@"name"];
     NSString *sortOrder = [diction objectForKey:@"sortOrder"];
     NSString *logo = [diction objectForKey:@"logo"];
     NSString *level = [[diction objectForKey:@"level"] stringValue];
     if ([level isEqualToString:@"1"])
     {
-      [array addObject:[[ServicesInit alloc]initService:sid name:name sortOrder:sortOrder logo:logo level:level]];
+      [arrayServiceTypes addObject:[[ServicesInit alloc]initService:sidServiceType name:name sortOrder:sortOrder logo:logo level:level]];
     }
     else
     {
@@ -86,7 +91,31 @@
   }
   NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sortOrder" ascending:YES];
   NSArray *discriptors = [NSArray arrayWithObjects:sortOrderDescriptor, nil];
-  sortedArray = [array sortedArrayUsingDescriptors:discriptors];
+  sortedArrayServiceTypes = [arrayServiceTypes sortedArrayUsingDescriptors:discriptors];
+  
+    // Читаем сервисы
+    
+  for (NSDictionary *diction in services)
+  {
+    NSString *sidService = [[diction objectForKey:@"sid"] stringValue];
+    NSString *name = [diction objectForKey:@"name"];
+    NSString *altName = [diction objectForKey:@"altName"];
+    NSString *fullName = [diction objectForKey:@"fullName"];
+    NSString *image = [diction objectForKey:@"image"];
+    NSString *verifyType = [diction objectForKey:@"verifyType"];
+    NSString *legalName = [diction objectForKey:@"legalName"];
+    NSString *inn = [diction objectForKey:@"inn"];
+    NSString *minSum = [diction objectForKey:@"minSum"];
+    NSString *maxSum = [diction objectForKey:@"maxSum"];
+    NSString *support = [diction objectForKey:@"support"];
+    NSString *system = [diction objectForKey:@"system"];
+    NSString *code = [diction objectForKey:@"code"];
+    NSString *active = [diction objectForKey:@"active"];
+    NSString *serviceType = [diction objectForKey:@"serviceType"];
+    NSString *area = [diction objectForKey:@"area"];
+    NSString *providerType = [diction objectForKey:@"providerType"];
+    [arrayServices addObject:[[OperatorsInit alloc] initOperator:sidService name:name altName:altName fullName:fullName image:image verifyType:verifyType legalName:legalName inn:inn minSum:minSum maxSum:maxSum support:support system:system code:code active:active serviceType:serviceType area:area providerType:providerType]];
+  }
   [[self tableView] reloadData];
 }
 
@@ -100,7 +129,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [array count];
+    return [arrayServiceTypes count];
 }
 
 
@@ -113,7 +142,7 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
   }
   NSObject *o = [[NSObject alloc] init];
-  o = [sortedArray objectAtIndex:indexPath.row];
+  o = [sortedArrayServiceTypes objectAtIndex:indexPath.row];
   cell.textLabel.text = [o valueForKey:@"name"];
   cell.detailTextLabel.text = [o valueForKey:@"sid"];
   return cell;

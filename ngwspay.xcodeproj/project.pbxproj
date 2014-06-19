@@ -19,6 +19,8 @@
 		A14279A619502FB400DEF85F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A142798E19502FB400DEF85F /* UIKit.framework */; };
 		A14279AE19502FB400DEF85F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A14279AC19502FB400DEF85F /* InfoPlist.strings */; };
 		A14279B019502FB400DEF85F /* ngwspayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A14279AF19502FB400DEF85F /* ngwspayTests.m */; };
+		A16622791952F418008BB890 /* OperatorsInit.m in Sources */ = {isa = PBXBuildFile; fileRef = A16622781952F418008BB890 /* OperatorsInit.m */; };
+		A166227C19532D14008BB890 /* OperatorsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A166227B19532D14008BB890 /* OperatorsView.m */; };
 		A16D2FCE195178F600E22DDE /* ServicesInit.m in Sources */ = {isa = PBXBuildFile; fileRef = A16D2FCD195178F600E22DDE /* ServicesInit.m */; };
 		A1C653B21950882600F19152 /* ngwspay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1C653B11950882600F19152 /* ngwspay.storyboard */; };
 		A1C653B51950891300F19152 /* ServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C653B41950891300F19152 /* ServicesView.m */; };
@@ -51,6 +53,10 @@
 		A14279AB19502FB400DEF85F /* ngwspayTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ngwspayTests-Info.plist"; sourceTree = "<group>"; };
 		A14279AD19502FB400DEF85F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A14279AF19502FB400DEF85F /* ngwspayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ngwspayTests.m; sourceTree = "<group>"; };
+		A16622771952F418008BB890 /* OperatorsInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperatorsInit.h; sourceTree = "<group>"; };
+		A16622781952F418008BB890 /* OperatorsInit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OperatorsInit.m; sourceTree = "<group>"; };
+		A166227A19532D14008BB890 /* OperatorsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperatorsView.h; sourceTree = "<group>"; };
+		A166227B19532D14008BB890 /* OperatorsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OperatorsView.m; sourceTree = "<group>"; };
 		A16D2FCC195178F600E22DDE /* ServicesInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServicesInit.h; sourceTree = "<group>"; };
 		A16D2FCD195178F600E22DDE /* ServicesInit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServicesInit.m; sourceTree = "<group>"; };
 		A1C653B11950882600F19152 /* ngwspay.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ngwspay.storyboard; sourceTree = "<group>"; };
@@ -126,6 +132,7 @@
 		A142799019502FB400DEF85F /* ngwspay */ = {
 			isa = PBXGroup;
 			children = (
+				A16622761952F402008BB890 /* Operators */,
 				A11005A019517E2800880AB0 /* Services */,
 				A142799919502FB400DEF85F /* AppDelegate.h */,
 				A142799A19502FB400DEF85F /* AppDelegate.m */,
@@ -163,6 +170,17 @@
 				A14279AC19502FB400DEF85F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A16622761952F402008BB890 /* Operators */ = {
+			isa = PBXGroup;
+			children = (
+				A16622771952F418008BB890 /* OperatorsInit.h */,
+				A16622781952F418008BB890 /* OperatorsInit.m */,
+				A166227A19532D14008BB890 /* OperatorsView.h */,
+				A166227B19532D14008BB890 /* OperatorsView.m */,
+			);
+			name = Operators;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +281,8 @@
 			files = (
 				A142799B19502FB400DEF85F /* AppDelegate.m in Sources */,
 				A16D2FCE195178F600E22DDE /* ServicesInit.m in Sources */,
+				A166227C19532D14008BB890 /* OperatorsView.m in Sources */,
+				A16622791952F418008BB890 /* OperatorsInit.m in Sources */,
 				A1C653B51950891300F19152 /* ServicesView.m in Sources */,
 				A142799719502FB400DEF85F /* main.m in Sources */,
 			);
