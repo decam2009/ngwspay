@@ -10,4 +10,6 @@
 
 @interface OperatorsView : UITableViewController
 
+@property (nonatomic, strong) NSArray *operators;
+
 @end

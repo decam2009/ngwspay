@@ -37,7 +37,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="WhA-Dc-xcs" kind="push" id="tHY-73-ram"/>
+                                    <segue destination="WhA-Dc-xcs" kind="push" identifier="ShowOperators" id="tHY-73-ram"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

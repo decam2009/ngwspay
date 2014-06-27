@@ -14,18 +14,21 @@
 
 @implementation OperatorsView
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(NSArray*) operators
+
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+  if (! _operators)
+    {
+      _operators = [[NSArray alloc] init];
     }
-    return self;
+  
+  return _operators;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+  
     // Do any additional setup after loading the view.
 }
 
@@ -33,6 +36,35 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
+{
+  return 1;
+}
+
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+  return [self.operators count];
+}
+
+-(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  
+  static NSString *cellIdentifier = @"Cell";
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+  if (!cell)
+  {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+  }
+  
+  NSObject *s = [[NSObject alloc] init];
+  
+  s = [self.operators objectAtIndex:indexPath.row];
+  cell.textLabel.text = [s valueForKey:@"name"];
+  cell.detailTextLabel.text = [s valueForKey:@"sid"];
+  
+  return cell;
 }
 
 /*

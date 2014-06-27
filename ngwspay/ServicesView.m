@@ -11,6 +11,7 @@
 #import "ServicesView.h"
 #import "ServicesInit.h"
 #import "OperatorsInit.h"
+#import "OperatorsView.h"
 
 @interface ServicesView ()
 {
@@ -19,6 +20,7 @@
   NSMutableArray *arrayServiceTypes;
   NSArray *sortedArrayServiceTypes;
   NSMutableArray *arrayServices;
+  NSObject *o;
 }
 @end
 
@@ -42,6 +44,7 @@
     connection = [NSURLConnection connectionWithRequest:request delegate:self];
   
     arrayServiceTypes = [[NSMutableArray alloc] init];
+    arrayServices = [[NSMutableArray alloc] init];
   
     if (connection)
       {
@@ -94,10 +97,10 @@
   sortedArrayServiceTypes = [arrayServiceTypes sortedArrayUsingDescriptors:discriptors];
   
     // Читаем сервисы
-    
+  
   for (NSDictionary *diction in services)
   {
-    NSString *sidService = [[diction objectForKey:@"sid"] stringValue];
+    NSString *sidService = [[diction objectForKey:@"id"] stringValue];
     NSString *name = [diction objectForKey:@"name"];
     NSString *altName = [diction objectForKey:@"altName"];
     NSString *fullName = [diction objectForKey:@"fullName"];
@@ -111,9 +114,10 @@
     NSString *system = [diction objectForKey:@"system"];
     NSString *code = [diction objectForKey:@"code"];
     NSString *active = [diction objectForKey:@"active"];
-    NSString *serviceType = [diction objectForKey:@"serviceType"];
-    NSString *area = [diction objectForKey:@"area"];
-    NSString *providerType = [diction objectForKey:@"providerType"];
+    NSDictionary *serviceType = [diction objectForKey:@"serviceType"];
+    NSDictionary *area = [diction objectForKey:@"area"];
+    NSDictionary *providerType = [diction objectForKey:@"providerType"];
+    
     [arrayServices addObject:[[OperatorsInit alloc] initOperator:sidService name:name altName:altName fullName:fullName image:image verifyType:verifyType legalName:legalName inn:inn minSum:minSum maxSum:maxSum support:support system:system code:code active:active serviceType:serviceType area:area providerType:providerType]];
   }
   [[self tableView] reloadData];
@@ -141,14 +145,14 @@
   {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
   }
-  NSObject *o = [[NSObject alloc] init];
+  o = [[NSObject alloc] init];
   o = [sortedArrayServiceTypes objectAtIndex:indexPath.row];
+  
   cell.textLabel.text = [o valueForKey:@"name"];
   cell.detailTextLabel.text = [o valueForKey:@"sid"];
   return cell;
 }
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -156,7 +160,34 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+  if ([[segue identifier] isEqualToString:@"ShowOperators"])
+    {
+      OperatorsView *ov = [segue destinationViewController];
+      
+      NSIndexPath *indexPath = nil;
+      NSObject *chosenServiceType = nil;
+      NSMutableArray *selectedOperators = [[NSMutableArray alloc] init];
+      indexPath = [self.tableView indexPathForSelectedRow];
+      
+      chosenServiceType = arrayServiceTypes[indexPath.row];
+      NSString *chosenServiceTypeID = [chosenServiceType valueForKey:@"sid"];
+      
+      for (NSDictionary *sarr in arrayServices)
+      {
+        NSDictionary *operatorServiceType = [sarr valueForKey:@"serviceType"];
+        NSString *operatorServiceTypeID = [[operatorServiceType valueForKey:@"id"] stringValue];
+        BOOL operatorStatus = [[sarr valueForKey:@"active"] boolValue];
+        NSString *operatorSID = [sarr valueForKey:@"sid"];
+        
+        if ([operatorServiceTypeID isEqualToString:chosenServiceTypeID] && operatorStatus == TRUE && [operatorSID isEqualToString:@"53"])
+        {
+          [selectedOperators addObject:sarr];
+        }
+      }
+      
+      [ov setOperators:selectedOperators];
+    }
 }
-*/
+
 
 @end
