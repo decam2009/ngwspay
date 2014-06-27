@@ -14,21 +14,21 @@
 
 @implementation OperatorsView
 
--(NSArray*) operators
+//-(NSArray*) operators
 
-{
-  if (! _operators)
-    {
-      _operators = [[NSArray alloc] init];
-    }
-  
-  return _operators;
-}
+//{
+//  if (! _operators)
+//    {
+//      _operators = [[NSArray alloc] init];
+//    }
+//  
+//  return _operators;
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-  
+    self.navigationItem.title = self.serviceTitle;
     // Do any additional setup after loading the view.
 }
 

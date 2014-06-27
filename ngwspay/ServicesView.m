@@ -171,21 +171,23 @@
       
       chosenServiceType = arrayServiceTypes[indexPath.row];
       NSString *chosenServiceTypeID = [chosenServiceType valueForKey:@"sid"];
-      
+      NSString *chosenServiceTypeName = [chosenServiceType valueForKey:@"name"];
       for (NSDictionary *sarr in arrayServices)
       {
         NSDictionary *operatorServiceType = [sarr valueForKey:@"serviceType"];
         NSString *operatorServiceTypeID = [[operatorServiceType valueForKey:@"id"] stringValue];
         BOOL operatorStatus = [[sarr valueForKey:@"active"] boolValue];
-        NSString *operatorSID = [sarr valueForKey:@"sid"];
+     //   NSString *operatorSID = [sarr valueForKey:@"sid"];
         
-        if ([operatorServiceTypeID isEqualToString:chosenServiceTypeID] && operatorStatus == TRUE && [operatorSID isEqualToString:@"53"])
+        if ([operatorServiceTypeID isEqualToString:chosenServiceTypeID] && operatorStatus == TRUE)
+            //&& [operatorSID isEqualToString:@"53"])
         {
           [selectedOperators addObject:sarr];
         }
       }
       
       [ov setOperators:selectedOperators];
+      [ov setServiceTitle:chosenServiceTypeName];
     }
 }
 

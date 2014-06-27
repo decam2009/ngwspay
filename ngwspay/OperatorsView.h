@@ -11,5 +11,6 @@
 @interface OperatorsView : UITableViewController
 
 @property (nonatomic, strong) NSArray *operators;
+@property (nonatomic, strong) NSString *serviceTitle;
 
 @end
