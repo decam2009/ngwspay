@@ -12,5 +12,6 @@
 
 @property (nonatomic, strong) NSArray *operators;
 @property (nonatomic, strong) NSString *serviceTitle;
+@property (nonatomic, strong) NSMutableArray *operatorForm;
 
 @end

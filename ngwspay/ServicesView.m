@@ -12,14 +12,14 @@
 #import "ServicesInit.h"
 #import "OperatorsInit.h"
 #import "OperatorsView.h"
+#import "FormsInit.h"
 
 @interface ServicesView ()
 {
   NSMutableData *webData;
   NSURLConnection *connection;
-  NSMutableArray *arrayServiceTypes;
+  NSMutableArray *arrayServiceTypes, *arrayServices, *arrayForms;
   NSArray *sortedArrayServiceTypes;
-  NSMutableArray *arrayServices;
   NSObject *o;
 }
 @end
@@ -45,6 +45,7 @@
   
     arrayServiceTypes = [[NSMutableArray alloc] init];
     arrayServices = [[NSMutableArray alloc] init];
+    arrayForms = [[NSMutableArray alloc] init];
   
     if (connection)
       {
@@ -74,6 +75,7 @@
   NSDictionary *dataDown = [dataUp objectForKey:@"data"];
   NSArray *serviceType = [dataDown objectForKey:@"serviceTypes"];
   NSArray *services = [dataDown objectForKey:@"services"];
+  NSArray *forms = [dataDown objectForKey:@"forms"];
   
   for (NSDictionary *diction in serviceType)
   {
@@ -119,6 +121,15 @@
     NSDictionary *providerType = [diction objectForKey:@"providerType"];
     
     [arrayServices addObject:[[OperatorsInit alloc] initOperator:sidService name:name altName:altName fullName:fullName image:image verifyType:verifyType legalName:legalName inn:inn minSum:minSum maxSum:maxSum support:support system:system code:code active:active serviceType:serviceType area:area providerType:providerType]];
+  }
+  
+  //Читаем формы для сервисов
+  for (NSDictionary *diction in forms)
+  {
+    NSString *fid = [diction objectForKey:@"id"];
+    NSString *fcode = [diction objectForKey:@"code"];
+    NSDictionary *ffilereferenceSubPart = [diction objectForKey:@"fileReferenceSubPart"];
+    [arrayForms addObject:[[FormsInit alloc] initForms:fid code:fcode fileReferenceSubPart:ffilereferenceSubPart]];
   }
   [[self tableView] reloadData];
 }
@@ -177,17 +188,16 @@
         NSDictionary *operatorServiceType = [sarr valueForKey:@"serviceType"];
         NSString *operatorServiceTypeID = [[operatorServiceType valueForKey:@"id"] stringValue];
         BOOL operatorStatus = [[sarr valueForKey:@"active"] boolValue];
-     //   NSString *operatorSID = [sarr valueForKey:@"sid"];
+        NSString *operatorSID = [sarr valueForKey:@"sid"];
         
-        if ([operatorServiceTypeID isEqualToString:chosenServiceTypeID] && operatorStatus == TRUE)
-            //&& [operatorSID isEqualToString:@"53"])
+        if ([operatorServiceTypeID isEqualToString:chosenServiceTypeID] && operatorStatus == TRUE && [operatorSID isEqualToString:@"1199"])
         {
           [selectedOperators addObject:sarr];
         }
       }
-      
       [ov setOperators:selectedOperators];
       [ov setServiceTitle:chosenServiceTypeName];
+      [ov setOperatorForm:arrayForms];
     }
 }
 

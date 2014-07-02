@@ -36,6 +36,7 @@
   serviceType = _serviceType;
   area = _area;
   providerType = _providerType;
+  
   return self;
 }
 

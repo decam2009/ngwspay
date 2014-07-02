@@ -84,6 +84,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="ysB-k6-H92" kind="push" identifier="ShowPaymentForm" id="oi0-3I-uO3"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -96,6 +99,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uzz-jI-ogn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1160" y="-5"/>
+        </scene>
+        <!--View Controller - PaymentForm-->
+        <scene sceneID="fW3-9z-3jQ">
+            <objects>
+                <viewController id="ysB-k6-H92" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Tsl-2Y-Bk7"/>
+                        <viewControllerLayoutGuide type="bottom" id="QOG-4a-Tu6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Fws-qk-yAY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="PaymentForm" id="BTE-Vw-wVt"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u0d-kd-nS7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1667" y="-7"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a4W-au-cg1">
