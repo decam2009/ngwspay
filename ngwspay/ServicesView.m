@@ -188,9 +188,10 @@
         NSDictionary *operatorServiceType = [sarr valueForKey:@"serviceType"];
         NSString *operatorServiceTypeID = [[operatorServiceType valueForKey:@"id"] stringValue];
         BOOL operatorStatus = [[sarr valueForKey:@"active"] boolValue];
-        NSString *operatorSID = [sarr valueForKey:@"sid"];
+        //NSString *operatorSID = [sarr valueForKey:@"sid"];
         
-        if ([operatorServiceTypeID isEqualToString:chosenServiceTypeID] && operatorStatus == TRUE && [operatorSID isEqualToString:@"1199"])
+        if ([operatorServiceTypeID isEqualToString:chosenServiceTypeID] && operatorStatus == TRUE)
+          //&& [operatorSID isEqualToString:@"1199"])
         {
           [selectedOperators addObject:sarr];
         }

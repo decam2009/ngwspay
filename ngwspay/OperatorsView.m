@@ -7,8 +7,13 @@
 //
 
 #import "OperatorsView.h"
+#import "FormsInit.h"
 
 @interface OperatorsView ()
+{
+  NSMutableArray *selector;
+  NSMutableArray *digitalLetter;
+}
 
 @end
 
@@ -65,6 +70,9 @@
    indexPath = [self.tableView indexPathForSelectedRow];
    NSDictionary *chosenOperator = [_operators objectAtIndex:indexPath.row];
    NSString * chosenOperatorID = [[chosenOperator valueForKey:@"code"] stringValue];
+   selector = [[NSMutableArray alloc] init];
+   digitalLetter = [[NSMutableArray alloc] init];
+  
    int i = 0; //Удалить потом надо
   
    if ([[segue identifier] isEqualToString:@"ShowPaymentForm"])
@@ -79,7 +87,7 @@
          NSDictionary *screenSequence = [fileReferenceSubParts valueForKey:@"screenSequence"];
          NSArray *screens = [screenSequence objectForKey:@"screens"];
          
-         //Здесь надо будет еще учесть что эеранов может быть несколько
+         //Здесь надо будет еще учесть что экранов может быть несколько
          for (int i = 0; i < [screens count]; i++)
          {
            NSDictionary *screenFields = [screens objectAtIndex:i];
@@ -94,6 +102,7 @@
                NSString *title = [trueFields valueForKey:@"title"];
                NSDictionary *store = [trueFields objectForKey:@"store"];
                NSArray *items = [store objectForKey:@"items"];
+               [selector addObject:[[[FormsInit alloc] init] sequence:sequence fields:fields trueFields:trueFields fid:fid exist:exist title:title store:store items:items]];
              }
           else
             if ([screenType isEqualToString:@"digital"] || [screenType isEqualToString:@"letter"])
@@ -116,6 +125,7 @@
                     NSDictionary *validator = [trueFields objectForKey:@"validator"];
                     NSArray *rules = [validator objectForKey:@"rules"];
                     NSString *regexp = [rules objectAtIndex:0];
+                    [digitalLetter addObject:[[[FormsInit alloc] init] trueFields:trueFields rid:rid type:type exist:exist title:title help:help readonly:readonly maxlength:maxlength secure:secure prefix:prefix postfix:postfix validator:validator rules:rules regexp:regexp]];
                   }
               }
            }
