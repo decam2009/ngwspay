@@ -22,6 +22,7 @@
 		A16622791952F418008BB890 /* OperatorsInit.m in Sources */ = {isa = PBXBuildFile; fileRef = A16622781952F418008BB890 /* OperatorsInit.m */; };
 		A166227C19532D14008BB890 /* OperatorsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A166227B19532D14008BB890 /* OperatorsView.m */; };
 		A16D2FCE195178F600E22DDE /* ServicesInit.m in Sources */ = {isa = PBXBuildFile; fileRef = A16D2FCD195178F600E22DDE /* ServicesInit.m */; };
+		A1C39DBD19BD525D003C6546 /* refs.json in Resources */ = {isa = PBXBuildFile; fileRef = A1C39DBC19BD525D003C6546 /* refs.json */; };
 		A1C653B21950882600F19152 /* ngwspay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1C653B11950882600F19152 /* ngwspay.storyboard */; };
 		A1C653B51950891300F19152 /* ServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C653B41950891300F19152 /* ServicesView.m */; };
 		A1EB864A1962648D0098F102 /* FormsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1EB86491962648D0098F102 /* FormsView.m */; };
@@ -61,6 +62,7 @@
 		A166227B19532D14008BB890 /* OperatorsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OperatorsView.m; sourceTree = "<group>"; };
 		A16D2FCC195178F600E22DDE /* ServicesInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServicesInit.h; sourceTree = "<group>"; };
 		A16D2FCD195178F600E22DDE /* ServicesInit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServicesInit.m; sourceTree = "<group>"; };
+		A1C39DBC19BD525D003C6546 /* refs.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = refs.json; path = ../../../Telepay/refs.json; sourceTree = "<group>"; };
 		A1C653B11950882600F19152 /* ngwspay.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ngwspay.storyboard; sourceTree = "<group>"; };
 		A1C653B31950891300F19152 /* ServicesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServicesView.h; sourceTree = "<group>"; };
 		A1C653B41950891300F19152 /* ServicesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServicesView.m; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 		A142799119502FB400DEF85F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A1C39DBC19BD525D003C6546 /* refs.json */,
 				A142799219502FB400DEF85F /* ngwspay-Info.plist */,
 				A142799319502FB400DEF85F /* InfoPlist.strings */,
 				A142799619502FB400DEF85F /* main.m */,
@@ -277,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1C653B21950882600F19152 /* ngwspay.storyboard in Resources */,
+				A1C39DBD19BD525D003C6546 /* refs.json in Resources */,
 				A142799519502FB400DEF85F /* InfoPlist.strings in Resources */,
 				A142799D19502FB400DEF85F /* Images.xcassets in Resources */,
 			);

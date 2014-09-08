@@ -8,6 +8,7 @@
 
 #import "OperatorsView.h"
 #import "FormsInit.h"
+#import "FormsView.h"
 
 @interface OperatorsView ()
 {
@@ -22,6 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+  
     self.navigationItem.title = self.serviceTitle;
     // Do any additional setup after loading the view.
 }
@@ -68,12 +70,12 @@
 {
    NSIndexPath *indexPath = nil;
    indexPath = [self.tableView indexPathForSelectedRow];
+   FormsView *fw = [segue destinationViewController];
    NSDictionary *chosenOperator = [_operators objectAtIndex:indexPath.row];
    NSString * chosenOperatorID = [[chosenOperator valueForKey:@"code"] stringValue];
    selector = [[NSMutableArray alloc] init];
    digitalLetter = [[NSMutableArray alloc] init];
-  
-   int i = 0; //Удалить потом надо
+   //int i = 0; //Удалить потом надо
   
    if ([[segue identifier] isEqualToString:@"ShowPaymentForm"])
    {
@@ -129,8 +131,8 @@
                   }
               }
            }
-       i++; //Удалить потом надо
          
+      //i++; //Удалить потом надо
        // Читаем дополнительные поля
        NSArray *addFields = [screenSequence objectForKey:@"fields"];
        NSDictionary *additionalFields = [addFields objectAtIndex:0];
@@ -138,9 +140,28 @@
        NSString *keyTitle = [additionalFields valueForKey:@"value"];
        NSString *valueTitle = [additionalFields valueForKey:@"valueTitle"];
        NSString *flag = [additionalFields valueForKey:@"flag"];
-     }
        
+       if ([digitalLetter count] == 0)
+         {
+           NSLog(@"digitalLetter is empty");
+          }
+       else
+         {
+           [fw setFormDataFields:digitalLetter];
+           //NSLog(@"digitalLetter is not empty");
+         }
+       if([selector count] == 0)
+         {
+           //NSLog (@"selector is empty");
+         }
+       else
+         {
+           [fw setFormSelectors:selector];
+           NSLog(@"selector is not empty");
+         }
+     }
    }
   }
+  [fw setOperatorTitle:[[self.operators objectAtIndex:indexPath.row] valueForKey:@"name"]];
 }
 @end

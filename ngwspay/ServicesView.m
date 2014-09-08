@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Boris Kaloshin. All rights reserved.
 //
 #define JSONFILE "http://wspay.ru/refs.json"
-//#define JSONLOCAL "/Users/BORIS/Desktop/Telepay"
+#define JSONLOCAL "/Users/BORIS/Desktop/Telepay/refs.json"
 
 #import "ServicesView.h"
 #import "ServicesInit.h"
@@ -17,6 +17,7 @@
 @interface ServicesView ()
 {
   NSMutableData *webData;
+  NSMutableData *localData;
   NSURLConnection *connection;
   NSMutableArray *arrayServiceTypes, *arrayServices, *arrayForms;
   NSArray *sortedArrayServiceTypes;
@@ -39,28 +40,98 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSURL *url = [NSURL URLWithString:@JSONFILE];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    connection = [NSURLConnection connectionWithRequest:request delegate:self];
+   // NSURL *url = [NSURL URLWithString:@JSONFILE];
+   // NSURLRequest *request = [NSURLRequest requestWithURL:url];
+   // connection = [NSURLConnection connectionWithRequest:request delegate:self];
   
     arrayServiceTypes = [[NSMutableArray alloc] init];
     arrayServices = [[NSMutableArray alloc] init];
     arrayForms = [[NSMutableArray alloc] init];
+    localData = [NSMutableData dataWithContentsOfFile:@JSONLOCAL];
   
-    if (connection)
-      {
-        webData = [[NSMutableData alloc] init];
-      }
+ ////-----------------------------------Кусок ниже для работы с локальным файлом
+  NSDictionary *allDataDictionary = [NSJSONSerialization JSONObjectWithData:localData options:0 error:nil];
+  NSDictionary *dataUp = [allDataDictionary objectForKey:@"data"];
+  NSDictionary *dataDown = [dataUp objectForKey:@"data"];
+  NSArray *serviceType = [dataDown objectForKey:@"serviceTypes"];
+  NSArray *services = [dataDown objectForKey:@"services"];
+  NSArray *forms = [dataDown objectForKey:@"forms"];
+  
+  for (NSDictionary *diction in serviceType)
+  {
+    // Читаем типы сервисов
+    NSString *sidServiceType =  [[diction objectForKey:@"id"] stringValue];
+    NSString *name = [diction objectForKey:@"name"];
+    NSString *sortOrder = [diction objectForKey:@"sortOrder"];
+    NSString *logo = [diction objectForKey:@"logo"];
+    NSString *level = [[diction objectForKey:@"level"] stringValue];
+    if ([level isEqualToString:@"1"])
+    {
+      [arrayServiceTypes addObject:[[ServicesInit alloc]initService:sidServiceType name:name sortOrder:sortOrder logo:logo level:level]];
+    }
+    else
+    {
+      continue;
+    }
+  }
+  NSSortDescriptor *sortOrderDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sortOrder" ascending:YES];
+  NSArray *discriptors = [NSArray arrayWithObjects:sortOrderDescriptor, nil];
+  sortedArrayServiceTypes = [arrayServiceTypes sortedArrayUsingDescriptors:discriptors];
+  
+  // Читаем сервисы
+  
+  for (NSDictionary *diction in services)
+  {
+    NSString *sidService = [[diction objectForKey:@"id"] stringValue];
+    NSString *name = [diction objectForKey:@"name"];
+    NSString *altName = [diction objectForKey:@"altName"];
+    NSString *fullName = [diction objectForKey:@"fullName"];
+    NSString *image = [diction objectForKey:@"image"];
+    NSString *verifyType = [diction objectForKey:@"verifyType"];
+    NSString *legalName = [diction objectForKey:@"legalName"];
+    NSString *inn = [diction objectForKey:@"inn"];
+    NSString *minSum = [diction objectForKey:@"minSum"];
+    NSString *maxSum = [diction objectForKey:@"maxSum"];
+    NSString *support = [diction objectForKey:@"support"];
+    NSString *system = [diction objectForKey:@"system"];
+    NSString *code = [diction objectForKey:@"code"];
+    NSString *active = [diction objectForKey:@"active"];
+    NSDictionary *serviceType = [diction objectForKey:@"serviceType"];
+    NSDictionary *area = [diction objectForKey:@"area"];
+    NSDictionary *providerType = [diction objectForKey:@"providerType"];
+    
+    [arrayServices addObject:[[OperatorsInit alloc] initOperator:sidService name:name altName:altName fullName:fullName image:image verifyType:verifyType legalName:legalName inn:inn minSum:minSum maxSum:maxSum support:support system:system code:code active:active serviceType:serviceType area:area providerType:providerType]];
+  }
+  
+  //Читаем формы для сервисов
+  for (NSDictionary *diction in forms)
+  {
+    NSString *fid = [diction objectForKey:@"id"];
+    NSString *fcode = [diction objectForKey:@"code"];
+    NSDictionary *ffilereferenceSubPart = [diction objectForKey:@"fileReferenceSubPart"];
+    [arrayForms addObject:[[FormsInit alloc] initForms:fid code:fcode fileReferenceSubPart:ffilereferenceSubPart]];
+  }
+  [[self tableView] reloadData];
+  
+  ////-----------------------------------Конец работы с локальным файлом
+  
+  
+////-----------------------------------Кусок ниже для работы с файлом в сети
+  
+ //   if (connection)
+ //     {
+ //       webData = [[NSMutableData alloc] init];
+ //     }
 }
 
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+/*-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   [webData setLength:0];
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-  [webData appendData:data];
+  [webData appendData:nil];
 }
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -70,7 +141,7 @@
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-  NSDictionary *allDataDictionary = [NSJSONSerialization JSONObjectWithData:webData options:0 error:nil];
+  NSDictionary *allDataDictionary = [NSJSONSerialization JSONObjectWithData:localData options:0 error:nil];
   NSDictionary *dataUp = [allDataDictionary objectForKey:@"data"];
   NSDictionary *dataDown = [dataUp objectForKey:@"data"];
   NSArray *serviceType = [dataDown objectForKey:@"serviceTypes"];
@@ -132,7 +203,8 @@
     [arrayForms addObject:[[FormsInit alloc] initForms:fid code:fcode fileReferenceSubPart:ffilereferenceSubPart]];
   }
   [[self tableView] reloadData];
-}
+}*/
+ ////-----------------------------------Конец работы с фалом в сети
 
 #pragma mark - Table view data source
 

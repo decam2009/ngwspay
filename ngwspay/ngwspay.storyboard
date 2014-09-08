@@ -100,10 +100,10 @@
             </objects>
             <point key="canvasLocation" x="1160" y="-5"/>
         </scene>
-        <!--View Controller - PaymentForm-->
+        <!--Forms View - PaymentForm-->
         <scene sceneID="fW3-9z-3jQ">
             <objects>
-                <viewController id="ysB-k6-H92" sceneMemberID="viewController">
+                <viewController id="ysB-k6-H92" customClass="FormsView" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Tsl-2Y-Bk7"/>
                         <viewControllerLayoutGuide type="bottom" id="QOG-4a-Tu6"/>

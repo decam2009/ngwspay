@@ -10,4 +10,11 @@
 
 @interface FormsView : UIViewController
 
+@property (nonatomic, strong) NSMutableArray *formDataFields;
+@property (nonatomic, strong) NSMutableArray *formSelectors;
+@property (nonatomic, strong) NSString *operatorTitle;
+
+-(void) drawTitleField: (NSMutableArray*) pformfields;
+-(void) drawMakePayment: (NSMutableArray*) pformfields;
+
 @end
