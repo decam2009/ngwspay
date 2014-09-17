@@ -15,6 +15,6 @@
 @property (nonatomic, strong) NSString *operatorTitle;
 
 -(void) drawTitleField: (NSMutableArray*) pformfields;
--(void) drawMakePayment: (NSMutableArray*) pformfields;
+-(void) drawMakePaymentButton: (NSMutableArray*) pformfields;
 
 @end

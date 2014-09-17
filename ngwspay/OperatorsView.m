@@ -148,11 +148,11 @@
        else
          {
            [fw setFormDataFields:digitalLetter];
-           //NSLog(@"digitalLetter is not empty");
+           NSLog(@"digitalLetter is not empty");
          }
        if([selector count] == 0)
          {
-           //NSLog (@"selector is empty");
+           NSLog (@"selector is empty");
          }
        else
          {
