@@ -142,7 +142,6 @@
 			children = (
 				A1F15A07195D87CA002C4FCA /* Forms */,
 				A16622761952F402008BB890 /* Operators */,
-				A11005A019517E2800880AB0 /* Services */,
 				A142799919502FB400DEF85F /* AppDelegate.h */,
 				A142799A19502FB400DEF85F /* AppDelegate.m */,
 				A142799C19502FB400DEF85F /* Images.xcassets */,
@@ -189,6 +188,7 @@
 				A16622781952F418008BB890 /* OperatorsInit.m */,
 				A166227A19532D14008BB890 /* OperatorsView.h */,
 				A166227B19532D14008BB890 /* OperatorsView.m */,
+				A11005A019517E2800880AB0 /* Services */,
 			);
 			name = Operators;
 			sourceTree = "<group>";
@@ -382,7 +382,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -414,7 +414,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -429,6 +429,7 @@
 				GCC_PREFIX_HEADER = "ngwspay/ngwspay-Prefix.pch";
 				INFOPLIST_FILE = "ngwspay/ngwspay-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -442,6 +443,7 @@
 				GCC_PREFIX_HEADER = "ngwspay/ngwspay-Prefix.pch";
 				INFOPLIST_FILE = "ngwspay/ngwspay-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -13,7 +13,7 @@
 -(id) initForms : (NSString*) _fid code: (NSString*) _fcode fileReferenceSubPart: (NSDictionary*) _ffilereferenceSubPart;
 
 -(id) sequence : (NSDictionary*) _sequence_s fields:(NSArray*) _fields_s trueFields:(NSDictionary*) _trueFields_s
-            fid:(NSString*) _fid_s exist: (BOOL) _exist_s title:(NSString*) _title_s store: (NSDictionary*) _store_s items: (NSArray*) _items_s;
+            fid:(NSString*) _fid_s exist: (BOOL) _exist_s title:(NSString*) _title_s store: (NSDictionary*) _store_s items: (NSArray*) _items_s titleItem:(NSString*) _titleItem_s customData:(NSDictionary*) _customData sharpSequence:(NSDictionary*) _sharpSequence screensItem:(NSArray*) _screensItem sequenceItem:(NSDictionary*) _sequenceItem fieldsItem:(NSArray*) _fieldsItem fieldSubTitle:(NSString*) _fieldSubTitle_s;
 
 
 //NSDictionary *sequence = [screenFields objectForKey:@"sequence"];

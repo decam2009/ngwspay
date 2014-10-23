@@ -75,7 +75,6 @@
    NSString * chosenOperatorID = [[chosenOperator valueForKey:@"code"] stringValue];
    selector = [[NSMutableArray alloc] init];
    digitalLetter = [[NSMutableArray alloc] init];
-   //int i = 0; //Удалить потом надо
   
    if ([[segue identifier] isEqualToString:@"ShowPaymentForm"])
    {
@@ -87,7 +86,7 @@
          //начинем разбирать экранную форму
          NSDictionary *fileReferenceSubParts = [formsarr valueForKey:@"ffileReferenceSubPart"];
          NSDictionary *screenSequence = [fileReferenceSubParts valueForKey:@"screenSequence"];
-         NSArray *screens = [screenSequence objectForKey:@"screens"];
+         NSArray *screens = [screenSequence valueForKey:@"screens"];
          
          //Здесь надо будет еще учесть что экранов может быть несколько
          for (int i = 0; i < [screens count]; i++)
@@ -104,16 +103,35 @@
                NSString *title = [trueFields valueForKey:@"title"];
                NSDictionary *store = [trueFields objectForKey:@"store"];
                NSArray *items = [store objectForKey:@"items"];
-               [selector addObject:[[[FormsInit alloc] init] sequence:sequence fields:fields trueFields:trueFields fid:fid exist:exist title:title store:store items:items]];
+               //Разбираем более глубокую вложенность screen в items
+               for (int j = 0; j <= [items count] - 1; j++)
+               {
+                 NSString *titleItem = [NSString alloc];
+                 NSDictionary* subItem = [items objectAtIndex:j];
+                 if ((bool)[subItem valueForKey:@"enable"] == 1)
+                 {
+                   titleItem = [subItem valueForKey:@"title"];
+                 }
+                 NSDictionary *customData = [subItem objectForKey:@"customData"];
+                 NSDictionary *sharpSequence = [customData objectForKey:@"#sequence"];
+                 NSDictionary *screenSequence = [sharpSequence objectForKey:@"screenSequence"];
+                 NSArray *screensItem = [screenSequence objectForKey:@"screens"];
+                 NSDictionary *zeroIndexFields = [screensItem objectAtIndex:0];
+                 NSDictionary *sequenceItem = [zeroIndexFields objectForKey:@"sequence"];
+                 NSArray *trueFieldsItems = [sequenceItem valueForKey:@"fields"];
+                 NSArray *fieldsItem = [trueFieldsItems objectAtIndex:0];
+                 NSString *fieldSubTitle = [fieldsItem valueForKey:@"title"];
+                 [selector addObject:[[[FormsInit alloc] init] sequence:sequence fields:fields trueFields:trueFields fid:fid exist:exist title:title store:store items:items titleItem:titleItem customData:customData sharpSequence:sharpSequence screensItem:screensItem sequenceItem:sequenceItem fieldsItem:fieldsItem fieldSubTitle:fieldSubTitle]];
+               }
              }
           else
             if ([screenType isEqualToString:@"digital"] || [screenType isEqualToString:@"letter"])
-              {
+            {
                 NSDictionary *sequence = [screenFields objectForKey:@"sequence"];
                 NSArray *fields = [sequence objectForKey:@"fields"];
                 for (int j = 0; j < [fields count]; j++)
                   {
-                    NSDictionary *trueFields = [fields objectAtIndex:0];
+                    NSDictionary *trueFields = [fields objectAtIndex:j];
                     NSString *rid = [trueFields valueForKey:@"id"];
                     NSString *type = [trueFields valueForKey:@"type"];
                     BOOL exist = [[trueFields valueForKey:@"exist"] boolValue];
@@ -130,17 +148,15 @@
                     [digitalLetter addObject:[[[FormsInit alloc] init] trueFields:trueFields rid:rid type:type exist:exist title:title help:help readonly:readonly maxlength:maxlength secure:secure prefix:prefix postfix:postfix validator:validator rules:rules regexp:regexp]];
                   }
               }
-           }
+      }
+       // Читаем дополнительные поля - необязательные, поэтому закоментированы
+       //NSArray *addFields = [screenSequence objectForKey:@"fields"];
+       //NSDictionary *additionalFields = [addFields objectAtIndex:0];
+       // NSString *key = [additionalFields valueForKey:@"key"];
+       // NSString *keyTitle = [additionalFields valueForKey:@"value"];
+       // NSString *valueTitle = [additionalFields valueForKey:@"valueTitle"];
+       // NSString *flag = [additionalFields valueForKey:@"flag"];
          
-      //i++; //Удалить потом надо
-       // Читаем дополнительные поля
-       NSArray *addFields = [screenSequence objectForKey:@"fields"];
-       NSDictionary *additionalFields = [addFields objectAtIndex:0];
-       NSString *key = [additionalFields valueForKey:@"key"];
-       NSString *keyTitle = [additionalFields valueForKey:@"value"];
-       NSString *valueTitle = [additionalFields valueForKey:@"valueTitle"];
-       NSString *flag = [additionalFields valueForKey:@"flag"];
-       
        if ([digitalLetter count] == 0)
          {
            NSLog(@"digitalLetter is empty");
@@ -162,6 +178,11 @@
      }
    }
   }
+  if (([digitalLetter count] == 0) && ([selector count] == 0))
+    {
+      [digitalLetter addObject:[[[FormsInit alloc] init] trueFields:nil rid:nil type:nil exist:nil title:@"Номер телефона" help:nil readonly:nil maxlength:@"9" secure:nil prefix:nil postfix:nil validator:nil rules:nil regexp:nil]];
+      [fw setFormDataFields:digitalLetter];
+    }
   [fw setOperatorTitle:[[self.operators objectAtIndex:indexPath.row] valueForKey:@"name"]];
 }
 @end

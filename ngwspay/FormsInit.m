@@ -1,4 +1,4 @@
-//
+ //
 //  FormsInit.m
 //  ngwspay
 //
@@ -21,6 +21,13 @@
   NSString *title_s;
   NSDictionary *store_s;
   NSArray *items_s;
+  NSString* titleItem_s;
+  NSDictionary* customData_s;
+  NSDictionary * sharpSequence_s;
+  NSArray* screensItem_s;
+  NSDictionary* sequenceItem_s;
+  NSArray* fieldsItem_s;
+  NSString* fieldSubTitle_s;
 
   NSDictionary *trueFields_d;
   NSString *rid_d;
@@ -47,7 +54,7 @@
   return self;
 }
 
--(id) sequence:(NSDictionary *)_sequence_s fields:(NSArray *)_fields_s trueFields:(NSDictionary *)_trueFields_s fid:(NSString *)_fid_s exist:(BOOL)_exist_s title:(NSString *)_title_s store:(NSDictionary *)_store_s items:(NSArray *)_items_s
+-(id) sequence:(NSDictionary *)_sequence_s fields:(NSArray *)_fields_s trueFields:(NSDictionary *)_trueFields_s fid:(NSString *)_fid_s exist:(BOOL)_exist_s title:(NSString *)_title_s store:(NSDictionary *)_store_s items:(NSArray *)_items_s titleItem:(NSString *)_titleItem_s customData:(NSDictionary *)_customData_s sharpSequence:(NSDictionary *)_sharpSequence_s screensItem:(NSArray *)_screensItem_s sequenceItem:(NSDictionary *)_sequenceItem_s fieldsItem:(NSArray *)_fieldsItem_s fieldSubTitle:(NSString *)_fieldSubTitle_s
 {
   sequence_s = _sequence_s;
   fields_s = _fields_s;
@@ -57,7 +64,13 @@
   title_s = _title_s;
   store_s = _store_s;
   items_s = _items_s;
-
+  titleItem_s = _titleItem_s;
+  customData_s = _customData_s;
+  sharpSequence_s = _sharpSequence_s;
+  screensItem_s = _screensItem_s;
+  sequenceItem_s = _sequenceItem_s;
+  fieldsItem_s = _fieldsItem_s;
+  fieldSubTitle_s = _fieldSubTitle_s;
   return self;
 }
 
@@ -78,6 +91,6 @@
   rules_d = _rules_d;
   regexp_d = _regexp_d;
   return self;
-}
+} 
 
 @end

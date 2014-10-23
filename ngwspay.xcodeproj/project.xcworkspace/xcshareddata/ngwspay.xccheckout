@@ -10,29 +10,29 @@
 	<string>ngwspay</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>F1019950-BA1E-44AA-A86B-9D36B91A9198</key>
+		<key>E6DC6EBB53813F768D2558495E54A54B5E1BDAAD</key>
 		<string>https://github.com/decam2009/ngwspay.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>ngwspay.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>F1019950-BA1E-44AA-A86B-9D36B91A9198</key>
+		<key>E6DC6EBB53813F768D2558495E54A54B5E1BDAAD</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/decam2009/ngwspay.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F1019950-BA1E-44AA-A86B-9D36B91A9198</string>
+	<string>E6DC6EBB53813F768D2558495E54A54B5E1BDAAD</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F1019950-BA1E-44AA-A86B-9D36B91A9198</string>
+			<string>E6DC6EBB53813F768D2558495E54A54B5E1BDAAD</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ngwspay</string>
 		</dict>
