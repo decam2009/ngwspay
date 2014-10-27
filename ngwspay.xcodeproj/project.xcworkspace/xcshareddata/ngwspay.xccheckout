@@ -14,7 +14,7 @@
 		<string>https://github.com/decam2009/ngwspay.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ngwspay.xcodeproj/project.xcworkspace</string>
+	<string>ngwspay.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>E6DC6EBB53813F768D2558495E54A54B5E1BDAAD</key>

@@ -27,6 +27,8 @@
 
 @implementation ServicesView
 
+@synthesize filteredData, searchBar;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -216,30 +218,43 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [arrayServiceTypes count];
+  if (tableView == self.tableView)
+    {
+      return [arrayServiceTypes count];
+    }
+  else
+    {
+      return 0;
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   static NSString* cellIdentifier = @"Cell";
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   if (!cell)
   {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
   }
   o = [[NSObject alloc] init];
   o = [sortedArrayServiceTypes objectAtIndex:indexPath.row];
-  
   cell.textLabel.text = [o valueForKey:@"name"];
   cell.detailTextLabel.text = [o valueForKey:@"sid"];
   return cell;
 }
 
 #pragma mark - SearchBar
--(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+-(void) searchThroughdata
 {
+  self.filteredServices = nil;
+  NSPredicate* fileredPredicate = [NSPredicate predicateWithFormat:@"SELF contains [search] %@", self.searchBar.text];
+  
+}
 
+-(void) searchBar:(UISearchBar *) searchBar textDidChange:(NSString *)searchText
+{
+ 
 }
 
 #pragma mark - Navigation
@@ -279,6 +294,5 @@
       [ov setOperatorForm:arrayForms];
     }
 }
-
 
 @end

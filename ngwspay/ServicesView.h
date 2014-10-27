@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ServicesView : UITableViewController <NSURLConnectionDataDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
+@interface ServicesView : UITableViewController <NSURLConnectionDataDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) IBOutlet UISearchBar* searchBar;
-@property (nonatomic, strong) NSArray* filteredData;
+@property (nonatomic, strong) NSMutableArray* filteredServices;
+
+
 @end
 
