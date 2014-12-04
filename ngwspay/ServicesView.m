@@ -27,7 +27,7 @@
 
 @implementation ServicesView
 
-@synthesize filteredData, searchBar;
+@synthesize filteredServices, nonfilteredServices, searchBar;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -49,6 +49,7 @@
     arrayServiceTypes = [[NSMutableArray alloc] init];
     arrayServices = [[NSMutableArray alloc] init];
     arrayForms = [[NSMutableArray alloc] init];
+    nonfilteredServices = [[NSMutableArray alloc] init];
     localData = [NSMutableData dataWithContentsOfFile:@JSONLOCAL];
   
  ////-----------------------------------Кусок ниже для работы с локальным файлом
@@ -208,11 +209,24 @@
 }*/
  ////-----------------------------------Конец работы с фалом в сети
 
+#pragma mark - SearchBar
+
+-(void) searchThroughData
+{
+  self.filteredServices = nil;
+  NSPredicate* filteredPredicate = [NSPredicate predicateWithFormat:@"SELF contains [search] %@", self.searchBar.text];
+  self.filteredServices = [[nonfilteredServices filteredArrayUsingPredicate:filteredPredicate] mutableCopy];
+}
+
+-(void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+  [self searchThroughData];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
     return 1;
 }
 
@@ -224,8 +238,17 @@
     }
   else
     {
-      return 0;
+      [self searchThroughData];
+      return [self.filteredServices count];
     }
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  if (self.searchDisplayController.isActive)
+  {
+    [self performSegueWithIdentifier:@"ShowOperators" sender:self];
+  }
 }
 
 
@@ -236,25 +259,23 @@
   if (!cell)
   {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
   }
+  
   o = [[NSObject alloc] init];
   o = [sortedArrayServiceTypes objectAtIndex:indexPath.row];
-  cell.textLabel.text = [o valueForKey:@"name"];
-  cell.detailTextLabel.text = [o valueForKey:@"sid"];
+  if (tableView == self.tableView)
+    {
+      [nonfilteredServices addObject:[o valueForKey:@"name"]];
+      cell.textLabel.text = self.nonfilteredServices [indexPath.row];
+      cell.detailTextLabel.text = [o valueForKey:@"sid"];
+    }
+  else
+    {
+      indexPath = [self.tableView indexPathForSelectedRow];
+      cell.textLabel.text = self.filteredServices [indexPath.row];
+    }
   return cell;
-}
-
-#pragma mark - SearchBar
--(void) searchThroughdata
-{
-  self.filteredServices = nil;
-  NSPredicate* fileredPredicate = [NSPredicate predicateWithFormat:@"SELF contains [search] %@", self.searchBar.text];
-  
-}
-
--(void) searchBar:(UISearchBar *) searchBar textDidChange:(NSString *)searchText
-{
- 
 }
 
 #pragma mark - Navigation
@@ -267,28 +288,23 @@
   if ([[segue identifier] isEqualToString:@"ShowOperators"])
     {
       OperatorsView *ov = [segue destinationViewController];
-      
       NSIndexPath *indexPath = nil;
       NSObject *chosenServiceType = nil;
       NSMutableArray *selectedOperators = [[NSMutableArray alloc] init];
       indexPath = [self.tableView indexPathForSelectedRow];
-      
       chosenServiceType = arrayServiceTypes[indexPath.row];
       NSString *chosenServiceTypeID = [chosenServiceType valueForKey:@"sid"];
       NSString *chosenServiceTypeName = [chosenServiceType valueForKey:@"name"];
       for (NSDictionary *sarr in arrayServices)
-      {
-        NSDictionary *operatorServiceType = [sarr valueForKey:@"serviceType"];
-        NSString *operatorServiceTypeID = [[operatorServiceType valueForKey:@"id"] stringValue];
-        BOOL operatorStatus = [[sarr valueForKey:@"active"] boolValue];
-        //NSString *operatorSID = [sarr valueForKey:@"sid"];
-        
-        if ([operatorServiceTypeID isEqualToString:chosenServiceTypeID] && operatorStatus == TRUE)
-          //&& [operatorSID isEqualToString:@"1199"])
         {
-          [selectedOperators addObject:sarr];
+          NSDictionary *operatorServiceType = [sarr valueForKey:@"serviceType"];
+          NSString *operatorServiceTypeID = [[operatorServiceType valueForKey:@"id"] stringValue];
+          BOOL operatorStatus = [[sarr valueForKey:@"active"] boolValue];
+          if ([operatorServiceTypeID isEqualToString:chosenServiceTypeID] && operatorStatus == TRUE)
+            {
+              [selectedOperators addObject:sarr];
+            }
         }
-      }
       [ov setOperators:selectedOperators];
       [ov setServiceTitle:chosenServiceTypeName];
       [ov setOperatorForm:arrayForms];

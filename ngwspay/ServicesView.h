@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) IBOutlet UISearchBar* searchBar;
 @property (nonatomic, strong) NSMutableArray* filteredServices;
+@property (nonatomic, strong) NSMutableArray* nonfilteredServices;
 
 
 @end
